@@ -1,0 +1,26 @@
+name: Deploy to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - main # Replace 'main' with 'master' if that's your default branch
+  # Allows manual runs from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Hugging Face Space
+        uses: huggingface/actions/deploy-to-hub@v1
+        with:
+          # Uses the secret you created in Step 2
+          hf_token: ${{ secrets.HF_TOKEN }}
+          # Target Space ID
+          repo_url: https://huggingface.co/spaces/vivekananda0010/progeni_AI
+          repo_type: space
