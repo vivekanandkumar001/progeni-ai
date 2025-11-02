@@ -1,6 +1,11 @@
-instance/
 .env
 __pycache__/
-*.pyc
-.venv/
+instance/
 uploads/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.cache
