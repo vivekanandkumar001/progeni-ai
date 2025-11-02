@@ -1,19 +1,22 @@
-# ---------- BASE IMAGE ----------
+# ---- Base Image ----
 FROM python:3.10-slim
 
-# ---------- WORKDIR ----------
+# ---- Working Directory ----
 WORKDIR /app
 
-# ---------- INSTALL DEPENDENCIES ----------
+# ---- Copy Requirements and Install ----
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ---------- COPY APP FILES ----------
+# ---- Copy the Entire App ----
 COPY . .
 
-# ---------- ENVIRONMENT ----------
-ENV PORT=7860
+# ---- Expose Port ----
 EXPOSE 7860
 
-# ---------- RUN FLASK ----------
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
+# ---- Environment Variables ----
+ENV PORT=7860
+ENV PYTHONUNBUFFERED=1
+
+# ---- Run Flask ----
+CMD ["python", "app.py"]
