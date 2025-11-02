@@ -1,16 +1,25 @@
 from flask import Flask
-from routes.main import main_bp
-from routes.auth import auth_bp
-from routes.resume import resume_bp
-from routes.interview import interview_bp
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
-app.register_blueprint(main_bp)
-app.register_blueprint(auth_bp)
-app.register_blueprint(resume_bp)
-app.register_blueprint(interview_bp)
+CORS(app)
+
+app.config.from_object("config")
+
+db = SQLAlchemy(app)
+
+# Import routes
+from routes import main, auth, resume, interview, notify
+app.register_blueprint(main.bp)
+app.register_blueprint(auth.bp)
+app.register_blueprint(resume.bp)
+app.register_blueprint(interview.bp)
+app.register_blueprint(notify.bp)
 
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 7860))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=7860)
